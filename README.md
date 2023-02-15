@@ -1,16 +1,21 @@
-# u_attend
+# U-Attend
+<hr>
 
-A new Flutter project.
 
-## Getting Started
+<span style="color: #ff9243">**Наша команда**</span>
+- Жмурко Анастасия Дмитриевна &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [VK @anastasia.tomson](https://vk.com/anastasia.tomson)
+- Сапрыкина Алина Александровна &nbsp;&nbsp;&nbsp;&nbsp;[VK @aernika](https://vk.com/aernika)
+- Галсанов Булат Мункуевич &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[VK @disc1ple](https://vk.com/disc1ple)
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<span style="color: #ff9243">**Описание**</span><br>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<b>U-Attend</b> — приложение для контроля посещаемости в Сибирском Федеральном Университете.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<b>Цель проекта</b> — автоматизация функции учета посещаемости учебных занятий в формате мобильного приложения.
+
+<b>Задачи разработки приложения:</b>
+1) упрощение процесса учета посещаемости учебных занятий
+   преподавателями и старостами групп
+2) предоставление студентам возможности наблюдения своей
+   посещаемости
