@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:u_attend/src/views/authentication_view.dart';
+import 'package:u_attend/src/views/profile_view.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -10,8 +11,8 @@ class AppRouter {
         return _materialRoute(AuthenticationView());
       // case '/check-in':
       //   return _materialRoute();
-      // case '/profile':
-      //   return _materialRoute();
+      case '/profile':
+        return _materialRoute(ProfileView());
       // case '/visits':
       //   return _materialRoute();
       default:

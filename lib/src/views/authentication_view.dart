@@ -13,6 +13,7 @@ class AuthenticationView extends HookWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: theme.value.cardColor,
         body: SizedBox(
           height: double.maxFinite,
           width: double.maxFinite,
@@ -23,7 +24,7 @@ class AuthenticationView extends HookWidget {
               SizedBox(height: 60),
               Text(
                 'Личный кабинет',
-                style: theme.value.primaryTextTheme.titleMedium,
+                style: theme.value.primaryTextTheme.titleLarge,
               ),
               SizedBox(height: 30),
               SizedBox(
@@ -139,7 +140,9 @@ class AuthenticationView extends HookWidget {
                   'Войти',
                   style: theme.value.primaryTextTheme.labelMedium,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/profile');
+                },
               ),
               SizedBox(height: 30),
               Text(
