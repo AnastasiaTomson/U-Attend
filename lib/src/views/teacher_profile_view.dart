@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class ProfileView extends HookWidget {
-  const ProfileView({super.key});
+class TeacherProfileView extends HookWidget {
+  const TeacherProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +51,17 @@ class ProfileView extends HookWidget {
                     size: 40,
                   ),
                   Text(
-                    'Студент',
+                    'Преподаватель',
                     style: theme.value.primaryTextTheme.titleSmall,
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    'Галсанов Булат',
-                    style: theme.value.primaryTextTheme.titleLarge,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
+                      'Кушнаренко Андрей Викторович',
+                      style: theme.value.primaryTextTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
               ),
@@ -80,9 +84,11 @@ class ProfileView extends HookWidget {
                         size: 22,
                       ),
                       SizedBox(width: 15),
-                      Text(
-                        'КИ20-13Б',
-                        style: theme.value.primaryTextTheme.bodyMedium,
+                      Flexible(
+                        child: Text(
+                          'Кафедра Систем искусственного интеллекта',
+                          style: theme.value.primaryTextTheme.bodyMedium,
+                        ),
                       ),
                     ],
                   ),
@@ -94,10 +100,10 @@ class ProfileView extends HookWidget {
                   SizedBox(height: 5),
                   Row(
                     children: [
-                      Icon(Icons.assignment_ind_outlined),
+                      Icon(Icons.mail_outline),
                       SizedBox(width: 15),
                       Text(
-                        '032049891',
+                        'akushnarenko@sfu-kras.ru',
                         style: theme.value.primaryTextTheme.bodyMedium,
                       ),
                     ],
@@ -105,88 +111,40 @@ class ProfileView extends HookWidget {
                 ],
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              width: double.maxFinite,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: theme.value.cardColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                'Староста: Нет',
-              ),
-            ),
           ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/visits');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.checklist_rounded,
-                        color: theme.value.dividerColor,
-                      ),
-                      Text(
-                        'Посещения',
-                        style: theme.value.primaryTextTheme.bodySmall,
-                      ),
-                    ],
-                  ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (int index) {
+            if (index == 0) {
+              Navigator.pushReplacementNamed(context, '/visits-teacher');
+            }
+            if (index == 1) {
+              Navigator.pushReplacementNamed(context, '/lesson');
+            }
+            if (index == 2) {
+              Navigator.pushReplacementNamed(context, '/teacher-profile');
+            }
+          },
+          currentIndex: 2,
+          selectedItemColor: theme.value.secondaryHeaderColor,
+          selectedFontSize: 12,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.checklist_rounded,
                 ),
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/check-in');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.qr_code_rounded,
-                        color: theme.value.dividerColor,
-                      ),
-                      Text(
-                        'Отметиться',
-                        style: theme.value.primaryTextTheme.bodySmall,
-                      ),
-                    ],
-                  ),
+                label: 'Посещения'),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.qr_code_rounded,
                 ),
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    // Navigator.pushReplacementNamed(context, '/profile');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.person_outline_rounded,
-                        color: theme.value.secondaryHeaderColor,
-                      ),
-                      Text(
-                        'Профиль',
-                        style: theme.value.primaryTextTheme.bodySmall!.copyWith(color: theme.value.secondaryHeaderColor),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+                label: 'Занятие'),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person_outline_rounded,
+                ),
+                label: 'Профиль'),
+          ],
         ),
       ),
     );

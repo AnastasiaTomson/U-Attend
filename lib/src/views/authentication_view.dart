@@ -89,43 +89,44 @@ class AuthenticationView extends HookWidget {
               SizedBox(height: 15),
               SizedBox(
                 width: 300,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      child: AnimatedContainer(
+                child: GestureDetector(
+                  onTap: () {
+                    isTeacher.value = !isTeacher.value;
+                  },
+                  child: Row(
+                    children: [
+                      AnimatedContainer(
                         height: 20,
                         width: 20,
                         duration: Duration(microseconds: 500),
                         curve: Curves.fastLinearToSlowEaseIn,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: isTeacher.value
-                              ? theme.value.secondaryHeaderColor
-                              : theme.value.disabledColor,
-                          border: Border.all(
+                            borderRadius: BorderRadius.circular(6),
                             color: isTeacher.value
-                              ? theme.value.secondaryHeaderColor
-                              : theme.value.primaryColor.withOpacity(0.7),
-                          )
+                                ? theme.value.secondaryHeaderColor
+                                : theme.value.cardColor,
+                            border: Border.all(
+                              width: 1.5,
+                              color: isTeacher.value
+                                  ? theme.value.secondaryHeaderColor
+                                  : theme.value.secondaryHeaderColor,
+                            )
                         ),
                         child: isTeacher.value
-                        ? Icon(
+                            ? Icon(
                           Icons.done_rounded,
                           size: 15,
                           color: Colors.white,
                         )
-                        : null,
+                            : null,
                       ),
-                      onTap: () {
-                        isTeacher.value = !isTeacher.value;
-                      },
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Я преподаватель',
-                      style: theme.value.primaryTextTheme.bodyMedium,
-                    ),
-                  ],
+                      SizedBox(width: 10),
+                      Text(
+                        'Я преподаватель',
+                        style: theme.value.primaryTextTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 15),
@@ -141,7 +142,11 @@ class AuthenticationView extends HookWidget {
                   style: theme.value.primaryTextTheme.labelMedium,
                 ),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/profile');
+                  if (isTeacher.value){
+                    Navigator.pushReplacementNamed(context, '/teacher-profile');
+                  }else{
+                    Navigator.pushReplacementNamed(context, '/profile');
+                  }
                 },
               ),
               SizedBox(height: 30),

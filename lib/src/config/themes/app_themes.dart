@@ -4,6 +4,7 @@ class AppTheme {
   static final ThemeData light = ThemeData(
     primaryColor: Color.fromRGBO(30, 30, 63, 1),
     secondaryHeaderColor: Color.fromRGBO(255, 128, 57, 1),
+    indicatorColor: Color.fromRGBO(0, 197, 102, 1),
     scaffoldBackgroundColor: Color.fromRGBO(239, 240, 246, 1),
     disabledColor: Color.fromRGBO(239, 240, 246, 1),
     cardColor: Colors.white,
