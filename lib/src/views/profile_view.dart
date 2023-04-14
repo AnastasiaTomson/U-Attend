@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:u_attend/src/blocs/authentication/authentication_bloc.dart';
+import 'package:u_attend/src/locator.dart';
 
 class ProfileView extends HookWidget {
   const ProfileView({super.key});
@@ -195,40 +198,55 @@ class ProfileView extends HookWidget {
   Future<void> _showAlertDialog(BuildContext context) async {
     final theme = Theme.of(context);
     return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text(
-                'Выход',
-                style: theme.primaryTextTheme.titleMedium,
-              ),
-              content: Text(
-                'Вы точно хотите выйти?',
-                style: theme.primaryTextTheme.bodyMedium,
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    'Отмена',
-                    style: theme.primaryTextTheme.bodyMedium!
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return BlocProvider(
+          create: (_) => locator<AuthenticationBloc>(),
+          child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              if(state is UnAuthenticated) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/authentication', (route) => false);
+              }
+            },
+            builder: (context, state) {
+              return AlertDialog(
+                title: Text(
+                  'Выход',
+                  style: theme.primaryTextTheme.titleMedium,
+                ),
+                content: Text(
+                  'Вы точно хотите выйти?',
+                  style: theme.primaryTextTheme.bodyMedium,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Отмена',
+                      style: theme.primaryTextTheme.bodyMedium!
                         .copyWith(color: theme.dividerColor),
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/authentication', (route) => false);
-                  },
-                  child: Text(
-                    'Выйти',
-                    style: theme.primaryTextTheme.bodyMedium!
+                  TextButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthenticationBloc>(context).add(Logout());
+                    },
+                    child: Text(
+                      'Выйти',
+                      style: theme.primaryTextTheme.bodyMedium!
                         .copyWith(color: theme.secondaryHeaderColor),
+                    ),
                   ),
-                ),
-              ],
-            ));
+                ],
+              );
+            },
+          ),
+        );
+      }
+    );
   }
 }
