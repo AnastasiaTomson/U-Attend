@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:u_attend/src/views/authentication_view.dart';
 import 'package:u_attend/src/views/change_lesson_visit_view.dart';
 import 'package:u_attend/src/views/check_in_view.dart';
@@ -22,21 +23,21 @@ class AppRouter {
       case '/authentication':
         return _materialRoute(AuthenticationView());
       case '/check-in':
-        return _materialRoute(CheckInView());
+        return _bottomBarRoute(CheckInView());
       case '/profile':
-        return _materialRoute(ProfileView());
+        return _bottomBarRoute(ProfileView());
       case '/visits':
-        return _materialRoute(VisitsView());
+        return _bottomBarRoute(VisitsView());
       case '/teacher-profile':
-        return _materialRoute(TeacherProfileView());
+        return _bottomBarRoute(TeacherProfileView());
       case '/lesson':
-        return _materialRoute(LessonView());
+        return _bottomBarRoute(LessonView());
       case '/qr-lesson':
         return _materialRoute(QRLessonView());
       case '/qr-scanner':
         return _materialRoute(QRScannerView());
       case '/visits-teacher':
-        return _materialRoute(VisitsTeacherView());
+        return _bottomBarRoute(VisitsTeacherView());
       case '/lesson-visit':
         return _materialRoute(LessonVisitView());
       case '/change-lesson-visit':
@@ -52,6 +53,14 @@ class AppRouter {
 
   static Route<dynamic> _materialRoute(Widget view) {
     return MaterialPageRoute(builder: (_) => view);
+  }
+
+  static Route<dynamic> _bottomBarRoute(Widget view) {
+    return PageTransition(
+      child: view,
+      type: PageTransitionType.fade,
+      duration: Duration(milliseconds: 100)
+    );
   }
 
   static Route<dynamic> _errorRoute() {

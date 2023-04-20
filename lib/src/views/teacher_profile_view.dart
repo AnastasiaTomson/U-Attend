@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:u_attend/src/blocs/teacher_profile/teacher_profile_bloc.dart';
+import 'package:u_attend/src/locator.dart';
+import 'package:u_attend/src/widgets/teacher_bottom_navigation.dart';
 
 class TeacherProfileView extends HookWidget {
+  final navigationIndex = 2;
+
   const TeacherProfileView({super.key});
 
   @override
@@ -33,119 +39,124 @@ class TeacherProfileView extends HookWidget {
             )
           ],
         ),
-        body: Column(
-          children: [
-            SizedBox(height: 10),
-            Container(
-              width: double.maxFinite,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: theme.value.cardColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.person_outline_rounded,
-                    size: 40,
-                  ),
-                  Text(
-                    'Преподаватель',
-                    style: theme.value.primaryTextTheme.titleSmall,
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Text(
-                      'Кушнаренко Андрей Викторович',
-                      style: theme.value.primaryTextTheme.titleLarge,
-                      textAlign: TextAlign.center,
+        body: BlocProvider<TeacherProfileBloc>(
+          create: (_) => locator<TeacherProfileBloc>()..add(GetTeacher()),
+          child: BlocBuilder<TeacherProfileBloc, TeacherProfileState>(
+            builder: (context, state) {
+              if(state is TeacherProfileInitial) {
+                return Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.maxFinite,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: theme.value.cardColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.person_outline_rounded,
+                            size: 40,
+                          ),
+                          Text(
+                            'Преподаватель',
+                            style: theme.value.primaryTextTheme.titleSmall,
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: theme.value.disabledColor,
+                            ),
+                            width: 200,
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              width: double.maxFinite,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: theme.value.cardColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.people_outline_rounded,
-                        size: 22,
+                  ],
+                );
+              }
+              if(state is TeacherReceived) {
+                return Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Container(
+                      width: double.maxFinite,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: theme.value.cardColor,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      SizedBox(width: 15),
-                      Flexible(
-                        child: Text(
-                          'Кафедра Систем искусственного интеллекта',
-                          style: theme.value.primaryTextTheme.bodyMedium,
-                        ),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.person_outline_rounded,
+                            size: 40,
+                          ),
+                          Text(
+                            'Преподаватель',
+                            style: theme.value.primaryTextTheme.titleSmall,
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            state.teacher.surname + ' ' + state.teacher.first_name + ' ' + state.teacher.patronymic,
+                            textAlign: TextAlign.center,
+                            style: theme.value.primaryTextTheme.titleLarge,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Divider(
-                    color: theme.value.dividerColor.withOpacity(0.3),
-                    thickness: 1,
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Icon(Icons.mail_outline),
-                      SizedBox(width: 15),
-                      Text(
-                        'akushnarenko@sfu-kras.ru',
-                        style: theme.value.primaryTextTheme.bodyMedium,
+                    ),
+                  ],
+                );
+              }
+              else {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.maxFinite,
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: theme.value.cardColor,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Произошла ошибка',
+                            style: theme.value.primaryTextTheme.bodyMedium!.copyWith(
+                              fontSize: 18
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          TextButton(
+                            child: Text(
+                              'Повторить попытку',
+                              style: theme.value.primaryTextTheme.labelMedium!.copyWith(
+                                color: theme.value.secondaryHeaderColor
+                              ),
+                            ),
+                            onPressed: () {
+                              BlocProvider.of<TeacherProfileBloc>(context).add(GetTeacher());
+                            },
+                          ),
+                        ],
+                      )
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/visits-teacher');
-            }
-            if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/lesson');
-            }
-            if (index == 2) {
-              Navigator.pushReplacementNamed(context, '/teacher-profile');
-            }
-          },
-          currentIndex: 2,
-          selectedItemColor: theme.value.secondaryHeaderColor,
-          selectedFontSize: 12,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.checklist_rounded,
-                ),
-                label: 'Посещения'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                ),
-                label: 'Занятие'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_outline_rounded,
-                ),
-                label: 'Профиль'),
-          ],
-        ),
+        bottomNavigationBar: TeacherBottomNavigation(navigationIndex),
       ),
     );
   }

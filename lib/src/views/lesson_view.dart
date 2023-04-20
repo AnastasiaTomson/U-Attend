@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:u_attend/src/widgets/teacher_bottom_navigation.dart';
 
 class LessonView extends HookWidget {
+  final navigationIndex = 1;
+
   const LessonView({super.key});
 
   @override
@@ -60,39 +63,7 @@ class LessonView extends HookWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/visits-teacher');
-            }
-            if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/qr-lesson');
-            }
-            if (index == 2) {
-              Navigator.pushReplacementNamed(context, '/teacher-profile');
-            }
-          },
-          currentIndex: 1,
-          selectedItemColor: theme.value.secondaryHeaderColor,
-          selectedFontSize: 12,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.checklist_rounded,
-                ),
-                label: 'Посещения'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                ),
-                label: 'Занятие'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_outline_rounded,
-                ),
-                label: 'Профиль'),
-          ],
-        ),
+        bottomNavigationBar: TeacherBottomNavigation(navigationIndex),
       ),
     );
   }

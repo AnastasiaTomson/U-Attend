@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:u_attend/src/widgets/student_bottom_navigation.dart';
 
 class CheckInView extends HookWidget {
+  final navigationIndex = 1;
+
   const CheckInView({super.key});
 
   @override
@@ -69,74 +72,7 @@ class CheckInView extends HookWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/visits');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.checklist_rounded,
-                        color: theme.value.dividerColor,
-                      ),
-                      Text(
-                        'Посещения',
-                        style: theme.value.primaryTextTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    // Navigator.pushReplacementNamed(context, '/check-in');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.qr_code_rounded,
-                        color: theme.value.secondaryHeaderColor,
-                      ),
-                      Text(
-                        'Отметиться',
-                        style: theme.value.primaryTextTheme.bodySmall!.copyWith(color: theme.value.secondaryHeaderColor),
-                      ),
-                    ],
-                  ),
-                ),
-                MaterialButton(
-                  minWidth: 40,
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/profile');
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.person_outline_rounded,
-                        color: theme.value.dividerColor,
-                      ),
-                      Text(
-                        'Профиль',
-                        style: theme.value.primaryTextTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: StudentBottomNavigation(navigationIndex),
       ),
     );
   }

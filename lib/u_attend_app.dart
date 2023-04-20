@@ -27,7 +27,7 @@ class UAttendApp extends StatelessWidget {
           initialRoute: prefs.containsKey(accessKey)
             & prefs.containsKey(accessExpKey) & prefs.containsKey(refreshKey)
             & prefs.containsKey(refreshExpKey)
-              ? '/profile'
+              ? prefs.getBool(isStaffKey)! ? '/teacher-profile' : '/profile'
               : '/authentication',
           onGenerateRoute: AppRouter.onGenerateRoute,
           // navigatorKey: NavigatorService().navigatorKey,

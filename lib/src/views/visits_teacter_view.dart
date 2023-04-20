@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/svg.dart';
-// import 'package:dropdown_search/dropdown_search.dart';
+import 'package:u_attend/src/widgets/teacher_bottom_navigation.dart';
 
 class VisitsTeacherView extends HookWidget {
+  final navigationIndex = 0;
+
   const VisitsTeacherView({super.key});
 
   @override
@@ -247,39 +248,7 @@ class VisitsTeacherView extends HookWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/visits-teacher');
-            }
-            if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/lesson');
-            }
-            if (index == 2) {
-              Navigator.pushReplacementNamed(context, '/teacher-profile');
-            }
-          },
-          currentIndex: 0,
-          selectedItemColor: theme.value.secondaryHeaderColor,
-          selectedFontSize: 12,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.checklist_rounded,
-                ),
-                label: 'Посещения'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                ),
-                label: 'Занятие'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_outline_rounded,
-                ),
-                label: 'Профиль'),
-          ],
-        ),
+        bottomNavigationBar: TeacherBottomNavigation(navigationIndex),
       ),
     );
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-// import 'package:dropdown_search/dropdown_search.dart';
+import 'package:u_attend/src/widgets/student_bottom_navigation.dart';
 
 class VisitsView extends HookWidget {
+  final navigationIndex = 0;
+
   const VisitsView({super.key});
 
   @override
@@ -41,7 +43,6 @@ class VisitsView extends HookWidget {
             children: [
               Expanded(
                 child: ListView(
-                  // mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 15),
@@ -449,39 +450,7 @@ class VisitsView extends HookWidget {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int index) {
-            if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/visits');
-            }
-            if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/check-in');
-            }
-            if (index == 2) {
-              Navigator.pushReplacementNamed(context, '/profile');
-            }
-          },
-          currentIndex: 0,
-          selectedItemColor: theme.value.secondaryHeaderColor,
-          selectedFontSize: 12,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.checklist_rounded,
-                ),
-                label: 'Посещения'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.qr_code_rounded,
-                ),
-                label: 'Отметиться'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_outline_rounded,
-                ),
-                label: 'Профиль'),
-          ],
-        ),
+        bottomNavigationBar: StudentBottomNavigation(navigationIndex),
       ),
     );
   }
