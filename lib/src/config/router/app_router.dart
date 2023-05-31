@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:u_attend/src/models/Lesson.dart';
 import 'package:u_attend/src/views/authentication_view.dart';
 import 'package:u_attend/src/views/change_lesson_visit_view.dart';
 import 'package:u_attend/src/views/check_in_view.dart';
@@ -9,11 +10,10 @@ import 'package:u_attend/src/views/lesson_visit_view.dart';
 import 'package:u_attend/src/views/profile_view.dart';
 import 'package:u_attend/src/views/qr_lesson_view.dart';
 import 'package:u_attend/src/views/qr_scanner_view.dart';
-import 'package:u_attend/src/views/success_view.dart';
+import 'package:u_attend/src/views/scan_status_view.dart';
 import 'package:u_attend/src/views/visits_view.dart';
-
-import '../../views/teacher_profile_view.dart';
-import '../../views/visits_teacter_view.dart';
+import 'package:u_attend/src/views/teacher_profile_view.dart';
+import 'package:u_attend/src/views/visits_teacher_view.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -33,19 +33,19 @@ class AppRouter {
       case '/lesson':
         return _bottomBarRoute(LessonView());
       case '/qr-lesson':
-        return _materialRoute(QRLessonView());
+        return _materialRoute(QRLessonView(lesson: args as Lesson));
       case '/qr-scanner':
         return _materialRoute(QRScannerView());
       case '/visits-teacher':
         return _bottomBarRoute(VisitsTeacherView());
       case '/lesson-visit':
-        return _materialRoute(LessonVisitView());
+        return _materialRoute(LessonVisitView(lesson: args as Lesson));
       case '/change-lesson-visit':
-        return _materialRoute(ChangeLessonVisitView());
+        return _materialRoute(ChangeLessonVisitView(lesson: args as Lesson));
       case '/qr-success':
-        return _materialRoute(SuccessView());
+        return _materialRoute(SuccessView(message: args as String));
       case '/qr-error':
-        return _materialRoute(ErrorView());
+        return _materialRoute(ErrorView(message: args as String));
       default:
         return _errorRoute();
     }

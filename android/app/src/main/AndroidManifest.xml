@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.u_attend">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="U-Attend"
         android:name="${applicationName}"

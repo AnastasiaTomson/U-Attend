@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ErrorView extends HookWidget {
-  const ErrorView({super.key});
+  final String message;
+  const ErrorView({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class ErrorView extends HookWidget {
               ),
               SizedBox(height: 12),
               Text(
-                'Возможно, данный QR-код уже не действителен',
+                message,
                 style: theme.value.primaryTextTheme.bodySmall,
                 textAlign: TextAlign.center,
               ),

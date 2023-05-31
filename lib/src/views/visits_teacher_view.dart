@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:u_attend/src/blocs/visits/visits_bloc.dart';
+import 'package:u_attend/src/blocs/visits_teacher/visits_teacher_bloc.dart';
 import 'package:u_attend/src/locator.dart';
-import 'package:u_attend/src/widgets/student_bottom_navigation.dart';
+import 'package:u_attend/src/widgets/teacher_bottom_navigation.dart';
 
-
-class VisitsView extends HookWidget {
+class VisitsTeacherView extends HookWidget {
   final navigationIndex = 0;
 
-  const VisitsView({super.key});
+  const VisitsTeacherView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,29 +23,23 @@ class VisitsView extends HookWidget {
           backgroundColor: theme.value.cardColor,
           shadowColor: Colors.transparent,
           centerTitle: true,
-          title: Column(
-            children: [
-              Text(
-                'Посещения',
-                style: theme.value.primaryTextTheme.titleMedium,
-              ),
-              Text(
-                'Личная посещаемость',
-                style: theme.value.primaryTextTheme.bodySmall!.copyWith(fontSize: 14),
-              ),
-            ]
-          ),
+          title: Column(children: [
+            Text(
+              'Посещения',
+              style: theme.value.primaryTextTheme.titleMedium,
+            ),
+          ]),
         ),
-        body: BlocProvider<VisitsBloc>(
-          create: (_) => locator<VisitsBloc>()..add(GetLessonAttend()),
-          child: BlocBuilder<VisitsBloc, VisitsState>(
+        body: BlocProvider<VisitsTeacherBloc>(
+          create: (_) => locator<VisitsTeacherBloc>()..add(GetLessonAttend()),
+          child: BlocBuilder<VisitsTeacherBloc, VisitsTeacherState>(
             builder: (context, state) {
-              if (state is VisitsInitial) {
+              if (state is VisitsTeacherInitial) {
                 return Center(child: CircularProgressIndicator(
                   color: theme.value.secondaryHeaderColor,
                 ));
               }
-              if (state is VisitsReceived) {
+              if (state is LessonAttendReceived) {
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: state.lessons.length,
@@ -92,13 +84,13 @@ class VisitsView extends HookWidget {
                                       itemCount: state.lessons[index].lessons.length,
                                       separatorBuilder: (context, index_1){
                                         return Padding(
-                                          padding: EdgeInsets.symmetric(vertical: 10),
-                                          child: Divider(
-                                            color: theme.value.dividerColor
-                                                .withOpacity(0.3),
-                                            thickness: 1,
-                                          ),
-                                        );
+                                                padding: EdgeInsets.symmetric(vertical: 10),
+                                                child: Divider(
+                                                  color: theme.value.dividerColor
+                                                      .withOpacity(0.3),
+                                                  thickness: 1,
+                                                ),
+                                              );
                                       },
                                       itemBuilder: (context, index_1) {
                                         return Row(
@@ -137,7 +129,7 @@ class VisitsView extends HookWidget {
                                                   ),
                                                   SizedBox(height: 8),
                                                   Text(
-                                                    state.lessons[index].lessons[index_1].teacher.toString(),
+                                                    state.lessons[index].lessons[index_1].groups.join(', '),
                                                     style: theme.value
                                                         .primaryTextTheme.bodySmall,
                                                   ),
@@ -146,15 +138,13 @@ class VisitsView extends HookWidget {
                                             ),
                                             Container(
                                               padding: EdgeInsets.only(left: 20),
-                                              child: Column(
-                                                children: [
-                                                  SvgPicture.asset(state.lessons[index].lessons[index_1].is_attend! ? 'assets/images/check_yes.svg' :  'assets/images/check_no.svg'),
-                                                  SizedBox(height: 4),
-                                                  Text(
-                                                    state.lessons[index].lessons[index_1].is_attend! ? 'Посетил(-а)' : 'Не посетил(-а)',
-                                                    style: theme.value.primaryTextTheme.bodySmall,
-                                                  ),
-                                                ],
+                                              child: IconButton(
+                                                icon:
+                                                Icon(Icons.keyboard_arrow_right),
+                                                color: theme.value.dividerColor,
+                                                onPressed: () {
+                                                  Navigator.pushNamed(context, '/lesson-visit', arguments: state.lessons[index].lessons[index_1]);
+                                                },
                                               ),
                                             ),
                                           ],
@@ -206,7 +196,7 @@ class VisitsView extends HookWidget {
                                     theme.value.secondaryHeaderColor),
                               ),
                               onPressed: () {
-                                BlocProvider.of<VisitsBloc>(context)
+                                BlocProvider.of<VisitsTeacherBloc>(context)
                                     .add(GetLessonAttend());
                               },
                             ),
@@ -218,7 +208,7 @@ class VisitsView extends HookWidget {
             },
           ),
         ),
-        bottomNavigationBar: StudentBottomNavigation(navigationIndex),
+        bottomNavigationBar: TeacherBottomNavigation(navigationIndex),
       ),
     );
   }

@@ -79,6 +79,7 @@ class AuthenticationView extends HookWidget {
                       height: 40,
                       child: TextFormField(
                         controller: passwordController,
+                        obscureText: true,
                         style: theme.value.primaryTextTheme.bodyMedium,
                         decoration: InputDecoration(
                           fillColor: theme.value.disabledColor,
